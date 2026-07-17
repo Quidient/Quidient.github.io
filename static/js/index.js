@@ -16,14 +16,19 @@ document.addEventListener("DOMContentLoaded", function () {
       el.style.setProperty("--pos", p + "%");
     };
     var dragging = false;
-    el.addEventListener("pointerdown", function (e) {
-      dragging = true;
-      if (el.setPointerCapture) { try { el.setPointerCapture(e.pointerId); } catch (x) {} }
-      setPos(e.clientX);
-      e.preventDefault();
-    });
+
+    // Mouse: the wipe follows the cursor on hover (no click needed).
+    // Touch / pen: press and drag to move.
     el.addEventListener("pointermove", function (e) {
-      if (dragging) setPos(e.clientX);
+      if (e.pointerType === "mouse" || dragging) setPos(e.clientX);
+    });
+    el.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "mouse") {
+        dragging = true;
+        if (el.setPointerCapture) { try { el.setPointerCapture(e.pointerId); } catch (x) {} }
+        setPos(e.clientX);
+        e.preventDefault();
+      }
     });
     var stop = function () { dragging = false; };
     el.addEventListener("pointerup", stop);
