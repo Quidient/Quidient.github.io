@@ -1,0 +1,273 @@
+/* ============================================================
+   static/css/index.css
+   Custom styling layered on top of Bulma, matching the
+   3D Gaussian Splatting / Nerfies layout. Original code —
+   no Nerfies source is reused.
+   ============================================================ */
+
+:root {
+  --btn:       #303035;
+  --btn-hover: #48484f;
+  --text-soft: #55555a;
+  --rule:      #e6e6ea;
+  --code-bg:   #f5f5f7;
+}
+
+html { overflow-x: hidden; }  /* clip the carousel's off-screen track (no page-level h-scroll) */
+
+body {
+  overflow-x: hidden;
+  font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+  color: #1c1c1e;
+}
+
+/* ---------- Hero ---------- */
+.hero.is-light { background: #fff; }
+
+/* Title row: [logo | centered title | equal spacer] keeps the title centered */
+.hero-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 1.4rem;
+}
+.hero-header .brand-logo {
+  grid-column: 1;
+  justify-self: start;
+  display: inline-flex;
+  line-height: 0;
+}
+.hero-header .brand-logo img {
+  height: 68px;   /* adjust to taste */
+  width: auto;
+  display: block;
+}
+.hero-header .publication-title {
+  grid-column: 2;
+  margin-bottom: 0 !important;   /* spacing handled by .hero-header */
+}
+
+/* Stack the logo above the title on small screens so it never crowds the text */
+@media (max-width: 640px) {
+  .hero-header { grid-template-columns: 1fr; }
+  .hero-header .brand-logo { grid-column: 1; justify-self: center; margin-bottom: 1rem; }
+  .hero-header .brand-logo img { height: 56px; }
+  .hero-header .publication-title { grid-column: 1; }
+}
+
+.publication-title {
+  font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.4rem !important;
+}
+.publication-subtitle {
+  font-size: 0.62em;
+  font-weight: 600;
+  color: var(--text-soft);
+  display: block;
+  margin-top: 0.6rem;
+}
+.publication-venue {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 1.2rem;
+}
+.publication-authors {
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-bottom: 0.35rem;
+}
+.publication-authors .author-block { white-space: nowrap; margin: 0 3px; }
+.publication-authors sup { font-size: 0.68em; font-weight: 600; }
+.publication-affiliations {
+  font-size: 1.05rem;
+  color: var(--text-soft);
+  line-height: 1.9;
+}
+.publication-affiliations .aff-block { white-space: nowrap; margin: 0 6px; }
+.publication-affiliations sup { font-size: 0.72em; font-weight: 600; }
+.publication-note { color: var(--text-soft); font-size: 0.96rem; margin-top: 0.4rem; }
+
+/* ---------- Link buttons (near-black pills) ---------- */
+.publication-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 1.8rem;
+}
+.publication-links .external-link.button {
+  background: var(--btn);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 500;
+  transition: background .15s ease, transform .15s ease;
+}
+.publication-links .external-link.button:hover {
+  background: var(--btn-hover);
+  transform: translateY(-1px);
+}
+.publication-links .external-link.button .icon { margin-right: 0.4em; }
+
+/* ---------- Section titles ---------- */
+.section .title.is-3 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.4rem;
+}
+
+/* ---------- Teaser ---------- */
+.hero.teaser { padding: 2.4rem 0 0.4rem; }
+.hero.teaser img,
+.hero.teaser video {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+.hero.teaser .caption,
+.image-caption {
+  max-width: 780px;
+  margin: 1rem auto 0;
+  font-size: 0.98rem;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+/* ---------- Abstract ---------- */
+.abstract-text {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ---------- Generic figure ---------- */
+.content-figure { text-align: center; margin-top: 1.4rem; }
+.content-figure img,
+.content-figure video { width: 100%; border-radius: 10px; display: block; }
+
+/* ---------- Full-width (edge-to-edge) figure ----------
+   Rendered as a direct child of <body>, so its width equals the full
+   viewport (minus scrollbar) with no container padding to counteract. */
+.fullwidth-figure { margin: 2.5rem 0 3rem; width: 100%; }
+.fullwidth-figure img,
+.fullwidth-figure video { width: 100%; display: block; border-radius: 0; }
+.fullwidth-figure .image-caption { padding: 0 1.5rem; }
+
+/* ---------- Results: before/after comparison sliders ---------- */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+@media (max-width: 768px) { .compare-grid { grid-template-columns: 1fr; } }
+
+.compare-figure { margin: 0; }
+
+.compare {
+  --pos: 50%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  line-height: 0;
+  touch-action: pan-y;          /* let the page scroll vertically; we handle horizontal */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+.compare img { width: 100%; height: 100%; display: block; -webkit-user-drag: none; user-select: none; pointer-events: none; }
+.compare .compare-base { position: relative; }         /* defines the box height */
+.compare .compare-overlay {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);      /* reveal from left up to --pos */
+}
+.compare .compare-overlay img { object-fit: cover; }
+
+.compare .compare-divider {
+  position: absolute; top: 0; bottom: 0; left: var(--pos);
+  width: 2px; background: #fff; transform: translateX(-1px);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+  pointer-events: none;
+}
+.compare .compare-handle {
+  position: absolute; top: 50%; left: var(--pos);
+  transform: translate(-50%, -50%);
+  width: 40px; height: 40px; padding: 0;
+  border: none; border-radius: 999px;
+  background: #fff; color: #333;
+  box-shadow: 0 1px 5px rgba(0,0,0,.4);
+  cursor: ew-resize;
+  display: flex; align-items: center; justify-content: center;
+}
+.compare .compare-handle::before,
+.compare .compare-handle::after {
+  content: "";
+  width: 0; height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.compare .compare-handle::before { border-right: 7px solid #555; margin-right: 3px; }
+.compare .compare-handle::after  { border-left: 7px solid #555; margin-left: 3px; }
+.compare .compare-handle:focus-visible { outline: 3px solid #3273dc; outline-offset: 2px; }
+
+.compare .compare-label {
+  position: absolute; top: 10px;
+  padding: 3px 10px;
+  font-size: 0.8rem; font-weight: 600; line-height: 1.4;
+  color: #fff; background: rgba(28,28,30,.7);
+  border-radius: 6px;
+  pointer-events: none;
+}
+.compare .label-left  { left: 10px; }
+.compare .label-right { right: 10px; }
+
+.compare-figure figcaption { margin-top: 0.6rem; }
+
+/* ---------- BibTeX ---------- */
+.bibtex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.copy-btn {
+  border: 1px solid var(--rule);
+  background: #fff;
+  color: var(--text-soft);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.copy-btn:hover { background: var(--code-bg); }
+#bibtex pre {
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 22px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #2a2a2e;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  background: #fff;
+  border-top: 1px solid var(--rule);
+  padding: 2.4rem 1.5rem 3rem;
+}
+.footer .content { color: var(--text-soft); font-size: 0.9rem; }
+.footer a { color: var(--text-soft); text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

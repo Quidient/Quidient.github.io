@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===== Edit these meta tags (read by Google Scholar + link-preview bots) ===== -->
+<title>Plenoptic Condensation</title>
+<meta name="description" content="A Novel Approach to Generalized Scene Reconstruction.">
+<meta property="og:title" content="Plenoptic Condensation">
+<meta property="og:description" content="A Novel Approach to Generalized Scene Reconstruction.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="static/images/teaser.svg">
+<meta property="og:url" content="https://Quidient.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="citation_title" content="Plenoptic Condensation">
+<meta name="citation_author" content="Brevin Tilmon">
+<meta name="citation_author" content="Alex DeJournett">
+<meta name="citation_author" content="John Leffingwell">
+<meta name="citation_author" content="Scott Ackerson">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_pdf_url" content="https://your-domain.com/paper.pdf">
+
+<link rel="icon" href="static/images/Quidient-Bottom-Bar-60.webp">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Vendored stack (same libraries Nerfies uses) -->
+<link rel="stylesheet" href="static/css/bulma.min.css">
+<link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+<link rel="stylesheet" href="static/css/bulma-slider.min.css">
+<link rel="stylesheet" href="static/css/academicons.min.css">
+<link rel="stylesheet" href="static/css/index.css">
+
+<!-- MathJax for LaTeX in the abstract / body -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [["$","$"],["\\(","\\)"]], displayMath: [["$$","$$"],["\\[","\\]"]] },
+    options: { skipHtmlTags: ["script","noscript","style","textarea","pre"] }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <a class="brand-logo" href="https://quidient.com/" target="_blank" rel="noopener">
+        <img src="static/images/title.png" alt="Project logo">
+      </a>
+      <h1 class="publication-title">
+        Plenoptic Condensation
+        <span class="publication-subtitle">A Novel Approach to Generalized Scene Reconstruction</span>
+      </h1>
+      
+      <p class="publication-venue">Quidient Tech Note</p>
+
+      <!-- Authors. Superscripts map to the affiliations below. -->
+      <div class="publication-authors">
+        <span class="author-block"><a href="#">Brevin Tilmon</a></span>
+        <span class="author-block"><a href="#">Alex DeJournett</a></span>
+        <span class="author-block"><a href="#">John Leffingwell</a></span>
+        <span class="author-block"><a href="#">Scott Ackerson</a></span>
+      </div>
+
+      <div class="publication-affiliations">
+        <span class="aff-block">Quidient, Columbia, MD</span>
+
+
+      <!-- Link buttons. Delete any you don't need; fill in the hrefs. -->
+      <div class="publication-links">
+        <!-- <a class="external-link button" href="#" target="_blank" rel="noopener">
+          <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a>
+        <a class="external-link button" href="#" target="_blank" rel="noopener">
+          <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a> -->
+        <a class="external-link button" href="https://siggraph-2026.s3.us-east-1.amazonaws.com/pcon-2026.zip" target="_blank" rel="noopener">
+          <span class="icon"><i class="fas fa-database"></i></span><span>Data</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TEASER ==================== -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <!-- For a video, swap the <img> for:
+    <video autoplay muted loop playsinline poster="static/images/teaser.svg">
+      <source src="static/videos/teaser.mp4" type="video/mp4"></video> -->
+    <img src="static/images/Teaser.png" alt="Teaser figure">
+    <p class="caption">
+      <strong>PCon reconstructs the global car hood surface patch more than twice as accurately as the
+SOTA methods.</strong><br> We compare PCon to two state-of-the-art generalized scene reconstruction (GSR) methods: NeRO and
+RT-Splatting. The top row shows real (GT) or rendered (GSR) images. The middle row shows virtually illuminated
+mesh surface normals. The bottom row shows the mesh illuminated by a virtual stripe projector with a manual BSDF
+that makes the dents easily perceived by humans.<br>
+<strong>PCon's local damage profile error is 35µm (0.035 mm)</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ==================== ABSTRACT ==================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Abstract</h2>
+        <div class="content abstract-text">
+          <p>
+            We present a novel Generalized Scene Reconstruction (GSR) approach called Plenoptic Condensation (PCon).
+PCon uses a multi-stage reconstruction pipeline, initially converting images into “soupy” scene elements with
+low (representational) power, then adaptively condensing the “soup” into “structured” elements of higher
+power capable of efficiently representing, for example, sharp edges and smooth reflective surfaces. PCon
+scene models called Reality Models™ (Relms) enable spatially varying representational power, which is
+essential for high-fidelity rendering, measurement, and scene understanding. We showcase several in-the-wild
+PCon reconstructions captured with consumer phone cameras. In one case called “Damaged Fiat,” PCon
+is benchmarked against two state-of-the-art (SOTA) GSR methods: NeRO and RT-Splatting. Referring to
+Figure 1 below, PCon reconstructs the global car hood surface patch more than twice as accurately as the
+SOTA methods. But more importantly, the local damage profile error for PCon is 35µm (0.035 mm), whereas
+the two other SOTA methods are essentially unable to measure the damage at all.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RESULTS (comparison sliders) ==================== -->
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+    <p class="has-text-centered" style="color:#55555a;margin-bottom:1.6rem;">Drag the handle to compare.</p>
+ 
+    <div class="compare-grid">
+ 
+      
+      <figure class="compare-figure">
+        <div class="compare" style="--pos:50%">
+          <img class="compare-base" src="static/images/cmp1_b.svg" alt="Reference">
+          <div class="compare-overlay"><img src="static/images/cmp1_a.svg" alt="Ours"></div>
+          <span class="compare-label label-left">Ours</span>
+          <span class="compare-label label-right">Reference</span>
+          <div class="compare-divider"></div>
+          <button class="compare-handle" type="button" aria-label="Drag to compare"></button>
+        </div>
+        <figcaption class="image-caption">Scene 1</figcaption>
+      </figure>
+ 
+      <figure class="compare-figure">
+        <div class="compare" style="--pos:50%">
+          <img class="compare-base" src="static/images/cmp2_b.svg" alt="Reference">
+          <div class="compare-overlay"><img src="static/images/cmp2_a.svg" alt="Ours"></div>
+          <span class="compare-label label-left">Ours</span>
+          <span class="compare-label label-right">Reference</span>
+          <div class="compare-divider"></div>
+          <button class="compare-handle" type="button" aria-label="Drag to compare"></button>
+        </div>
+        <figcaption class="image-caption">Scene 2</figcaption>
+      </figure>
+ 
+      <figure class="compare-figure">
+        <div class="compare" style="--pos:50%">
+          <img class="compare-base" src="static/images/cmp3_b.svg" alt="Reference">
+          <div class="compare-overlay"><img src="static/images/cmp3_a.svg" alt="Ours"></div>
+          <span class="compare-label label-left">Ours</span>
+          <span class="compare-label label-right">Reference</span>
+          <div class="compare-divider"></div>
+          <button class="compare-handle" type="button" aria-label="Drag to compare"></button>
+        </div>
+        <figcaption class="image-caption">Scene 3</figcaption>
+      </figure>
+ 
+      <figure class="compare-figure">
+        <div class="compare" style="--pos:50%">
+          <img class="compare-base" src="static/images/cmp4_b.svg" alt="Reference">
+          <div class="compare-overlay"><img src="static/images/cmp4_a.svg" alt="Ours"></div>
+          <span class="compare-label label-left">Ours</span>
+          <span class="compare-label label-right">Reference</span>
+          <div class="compare-divider"></div>
+          <button class="compare-handle" type="button" aria-label="Drag to compare"></button>
+        </div>
+        <figcaption class="image-caption">Scene 4</figcaption>
+      </figure>
+ 
+    </div>
+  </div>
+</section> -->
+
+<!-- ==================== BIBTEX ==================== -->
+<!-- <section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="bibtex-header">
+          <h2 class="title is-3">BibTeX</h2>
+          <button class="copy-btn" id="copy-bibtex" type="button">Copy</button>
+        </div>
+<pre><code>@article{yourkey2026,
+  title   = {Your Paper Title Here},
+  author  = {Author, First and Author, Second and Author, Third},
+  journal = {Conference / Journal Name},
+  year    = {2026},
+  url     = {https://your-domain.com/}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container is-max-desktop has-text-centered">
+    <div class="content">
+      <p>
+        Icons by <a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a>
+        (CC BY 4.0) and <a href="https://jpswalsh.github.io/academicons/" target="_blank" rel="noopener">Academicons</a>
+        (SIL OFL 1.1).
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts (same libraries Nerfies uses) -->
+<script src="static/js/jquery.min.js"></script>
+<script defer src="static/js/fontawesome.all.min.js"></script>
+<script src="static/js/bulma-carousel.min.js"></script>
+<script src="static/js/bulma-slider.min.js"></script>
+<script src="static/js/index.js"></script>
+</body>
+</html>
