@@ -82,7 +82,8 @@ body {
   line-height: 2;
   margin-bottom: 0.35rem;
 }
-.publication-authors .author-block { white-space: nowrap; margin: 0 3px; }
+.publication-authors .author-block { white-space: nowrap; margin: 0 15px; }
+.comms-author { color: #a16eff; }
 .publication-authors sup { font-size: 0.68em; font-weight: 600; }
 .publication-affiliations {
   font-size: 1.05rem;
