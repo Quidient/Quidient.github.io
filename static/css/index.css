@@ -115,11 +115,7 @@ body {
   background: var(--btn-hover);
   transform: translateY(-1px);
 }
-.publication-links .external-link.button .icon { margin-right: 0.4em; }
-
-/* Make ONLY the Data button's icon white. Data is the last link button;
-   if you reorder the buttons, give the Data <a> a class and target that instead. */
-.publication-links .external-link.button:last-child .icon svg { fill: #fff; }
+.publication-links .external-link.button .icon { margin-right: 0.4em; fill: #fff;}
 
 /* ---------- Section titles ---------- */
 .section .title.is-3 {
